@@ -16,11 +16,11 @@ The project was implemented using the following technologies:
 
 # Installation and Usage
 To install and use the chat application, follow these steps:
-* Clone the project repository from GitHub URL.
+* Clone the project repository from [GitHub URL](https://github.com/AHNAF14924/Multi-User-Chat-Application.git)
 * Open the terminal/command prompt.
 * Navigate to the project directory.
-* Start the server by running python server.py.
-* Run the client by executing python client.py.
+* Start the server by running python `server.py`
+* Run the client by executing python `client.py`
  ## Server Setup
  * Choose one of the computers to act as the server. This computer will run the server code.
  * Modify the server code to use the computer's local IP address (e.g., '192.168.x.x' or '10.0.x.x') in the host variable. This allows other computers to connect to the server.
