@@ -63,4 +63,4 @@ python3 client.py
 
 ## Exiting the Application
 To exit the chat application:
-* Type exit in the terminal and press Enter. This will disconnect you from the chat and close the client application.
+* Type `exit` in the terminal and press Enter. This will disconnect you from the chat and close the client application.
