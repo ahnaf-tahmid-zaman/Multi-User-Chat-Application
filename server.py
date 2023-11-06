@@ -5,7 +5,7 @@ import threading
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Define the host and port
-host = '192.168.0.9'
+host = '192.168.0.11'  # Listen on all available network interfaces
 port = 12345
 
 # Bind the socket to the host and port
@@ -25,7 +25,7 @@ def broadcast(message, sender=None):
     for client_socket, nickname in zip(clients, nicknames):
         if client_socket != sender:
             try:
-                client_socket.send(message)
+                client_socket.send(message.encode('utf-8'))
             except:
                 remove_client(client_socket)
 
@@ -59,7 +59,7 @@ def handle_client(client_socket):
                     client_socket.send("Recipient not found.".encode('utf-8'))
             else:
                 # Broadcast regular message
-                broadcast(f"{nickname}: {message}".encode('utf-8'), sender=client_socket)
+                broadcast(f"{nickname}: {message.decode('utf-8')}", sender=client_socket)
     except:
         remove_client(client_socket)
 
