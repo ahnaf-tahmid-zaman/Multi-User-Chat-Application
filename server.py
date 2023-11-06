@@ -5,7 +5,7 @@ import threading
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Define the host and port
-host = '192.168.0.11'  # Listen on all available network interfaces
+host = '192.168.0.9'  # Listen on all available network interfaces
 port = 12345
 
 # Bind the socket to the host and port

@@ -7,7 +7,7 @@ import socket
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Define the server's host and port
-server_host = '192.168.0.11'  # Change this to the server's IP or hostname
+server_host = '192.168.0.9'  # Change this to the server's IP or hostname
 server_port = 12345
 
 # Connect to the server
