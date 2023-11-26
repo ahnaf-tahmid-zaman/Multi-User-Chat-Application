@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import scrolledtext
 import threading
 import socket
+import re
+import webbrowser
 
 # Create a socket
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -18,21 +20,14 @@ def send_message():
     message = message_entry.get()
     client.send(message.encode('utf-8'))
     message_entry.delete(0, tk.END)
-    chat_text.config(state=tk.NORMAL)
-    chat_text.insert(tk.END, "You: " + message + "\n")
-    chat_text.config(state=tk.DISABLED)
+    display_message("You", message)
 
 # Function to receive and display messages from the server
 def receive_messages():
     while True:
         try:
             message = client.recv(1024).decode('utf-8')
-            chat_text.config(state=tk.NORMAL)
-            if message.startswith("Server: "):
-                chat_text.insert(tk.END, message + "\n")
-            else:
-                chat_text.insert(tk.END, message + "\n")
-            chat_text.config(state=tk.DISABLED)
+            display_message("", message)  # Removed "Server" label
         except:
             print("Connection closed.")
             client.close()
@@ -41,6 +36,26 @@ def receive_messages():
 # Function to handle Enter key press
 def on_enter(event):
     send_message()
+
+# Function to display messages in the chat window
+def display_message(sender, message):
+    chat_text.config(state=tk.NORMAL)
+    formatted_message = f"{sender}: {message}\n" if sender else f"{message}\n"
+    chat_text.insert(tk.END, formatted_message)
+
+    # Check for URLs in the message and make them clickable
+    urls = re.findall(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', message)
+    for url in urls:
+        chat_text.tag_configure('link', foreground='blue', underline=True)
+        chat_text.insert(tk.END, url, 'link')
+        chat_text.tag_bind('link', '<Button-1>', lambda e, url=url: open_browser(url))
+        chat_text.insert(tk.END, " ")
+
+    chat_text.config(state=tk.DISABLED)
+
+# Function to open the URL in the default web browser
+def open_browser(url):
+    webbrowser.open(url)
 
 # Create a GUI for the client
 client_gui = tk.Tk()
