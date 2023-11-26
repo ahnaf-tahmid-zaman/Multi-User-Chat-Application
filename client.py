@@ -38,6 +38,10 @@ def receive_messages():
             client.close()
             break
 
+# Function to handle Enter key press
+def on_enter(event):
+    send_message()
+
 # Create a GUI for the client
 client_gui = tk.Tk()
 client_gui.title("Chat Client")
@@ -51,6 +55,9 @@ message_entry.pack()
 
 send_button = tk.Button(client_gui, text="Send", command=send_message)
 send_button.pack()
+
+# Bind the Enter key to the send_message function
+client_gui.bind('<Return>', on_enter)
 
 # Create a thread to receive messages
 receive_thread = threading.Thread(target=receive_messages)
